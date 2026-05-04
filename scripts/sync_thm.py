@@ -1,33 +1,15 @@
 """
-sync_thm.py
------------
-Fetches completed TryHackMe rooms and syncs them to:
-  1. This repo's README.md
-  2. A Notion database
+sync_thm.py - Reads rooms.json and syncs to Notion + README
 """
 
 import os
 import re
+import json
 import requests
 from datetime import datetime, timezone
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
-THM_USERNAME       = os.environ["THM_USERNAME"]
 NOTION_TOKEN       = os.environ["NOTION_TOKEN"]
 NOTION_DATABASE_ID = os.environ["NOTION_DATABASE_ID"]
-THM_COOKIE         = os.environ["THM_COOKIE"]
-
-THM_CF_CLEARANCE = os.environ["THM_CF_CLEARANCE"]
-
-THM_HEADERS = {
-    "Cookie": f"connect.sid={THM_COOKIE}; cf_clearance={THM_CF_CLEARANCE}",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Referer": "https://tryhackme.com",
-}
-
-THM_PROFILE_URL = f"https://tryhackme.com/api/user/rank/{THM_USERNAME}"
-THM_ROOMS_URL   = f"https://tryhackme.com/api/v2/hacktivities?username={THM_USERNAME}&limit=100&type=completed"
 
 NOTION_HEADERS = {
     "Authorization": f"Bearer {NOTION_TOKEN}",
@@ -42,38 +24,15 @@ DIFFICULTY_EMOJI = {
     "insane": "⚫",
 }
 
-# ── TryHackMe ─────────────────────────────────────────────────────────────────
-
-def fetch_thm_profile():
-    try:
-        r = requests.get(THM_PROFILE_URL, headers=THM_HEADERS, timeout=10)
-        r.raise_for_status()
-        return r.json()
-    except Exception as e:
-        print(f"[THM] Could not fetch profile: {e}")
-        return {}
-
-
-def fetch_completed_rooms():
-    try:
-        r = requests.get(THM_ROOMS_URL, headers=THM_HEADERS, timeout=10)
-        print(f"[THM] Status code: {r.status_code}")
-        print(f"[THM] Response preview: {r.text[:300]}")
-        r.raise_for_status()
-        data = r.json()
-        return data.get("data", {}).get("items", [])
-    except Exception as e:
-        print(f"[THM] Could not fetch rooms: {e}")
-        return []
-
-# ── Notion ────────────────────────────────────────────────────────────────────
+def load_rooms():
+    with open("rooms.json", "r") as f:
+        return json.load(f)
 
 def get_existing_notion_rooms():
     url = f"https://api.notion.com/v1/databases/{NOTION_DATABASE_ID}/query"
     existing = set()
     has_more = True
     cursor = None
-
     while has_more:
         payload = {"page_size": 100}
         if cursor:
@@ -86,57 +45,37 @@ def get_existing_notion_rooms():
                 existing.add(slug_prop[0]["text"]["content"])
         has_more = data.get("has_more", False)
         cursor = data.get("next_cursor")
-
     return existing
 
-
-def add_room_to_notion(room: dict):
-    difficulty = room.get("difficulty", "unknown").lower()
-    emoji = DIFFICULTY_EMOJI.get(difficulty, "⚪")
-
-    try:
-        dt = datetime.fromisoformat(room.get("completedDate", "").replace("Z", "+00:00"))
-        date_str = dt.strftime("%Y-%m-%d")
-    except Exception:
-        date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
+def add_room_to_notion(room):
+    difficulty = room.get("difficulty", "easy").lower()
+    emoji = DIFFICULTY_EMOJI.get(difficulty, "🟢")
     payload = {
         "parent": {"database_id": NOTION_DATABASE_ID},
         "properties": {
-            "Name": {"title": [{"text": {"content": room.get("title", "Unknown Room")}}]},
-            "Slug": {"rich_text": [{"text": {"content": room.get("code", "")}}]},
-            "Category": {"select": {"name": (room.get("categories") or ["Uncategorized"])[0]}},
+            "Name":       {"title": [{"text": {"content": room["title"]}}]},
+            "Slug":       {"rich_text": [{"text": {"content": room["slug"]}}]},
+            "Category":   {"select": {"name": room.get("category", "General")}},
             "Difficulty": {"select": {"name": f"{emoji} {difficulty.capitalize()}"}},
-            "Completed": {"date": {"start": date_str}},
-            "URL": {"url": f"https://tryhackme.com/room/{room.get('code', '')}"},
-            "Status": {"status": {"name": "Done"}},
+            "Completed":  {"date": {"start": room["completed"]}},
+            "URL":        {"url": f"https://tryhackme.com/room/{room['slug']}"},
+            "Status":     {"status": {"name": "Done"}},
         },
     }
-
     r = requests.post("https://api.notion.com/v1/pages", headers=NOTION_HEADERS, json=payload)
     if r.status_code == 200:
-        print(f"[Notion] ✅ Added: {room.get('title')}")
+        print(f"[Notion] ✅ Added: {room['title']}")
     else:
-        print(f"[Notion] ❌ Failed: {room.get('title')}: {r.text}")
+        print(f"[Notion] ❌ Failed: {room['title']}: {r.text}")
 
-
-# ── README ────────────────────────────────────────────────────────────────────
-
-def update_readme(rooms: list, profile: dict):
+def update_readme(rooms):
     with open("README.md", "r") as f:
         content = f.read()
 
-    rank         = profile.get("userRank", "—")
-    country_rank = profile.get("countryRank", "—")
-    streak       = profile.get("streak", {}).get("currentStreak", "—")
-    total        = len(rooms)
-
+    total = len(rooms)
     stats_table = f"""| Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | {total} |
-| 🔥 Current Streak | {streak} days |
-| 🏆 Rank | #{rank} |
-| 🌐 Country Rank | #{country_rank} |"""
+| 🏁 Rooms Completed | {total} |"""
 
     content = re.sub(
         r"(<!-- THM-STATS:START -->).*?(<!-- THM-STATS:END -->)",
@@ -145,18 +84,13 @@ def update_readme(rooms: list, profile: dict):
     )
 
     rows = []
-    for room in sorted(rooms, key=lambda r: r.get("completedDate", ""), reverse=True):
-        title      = room.get("title", "Unknown")
-        slug       = room.get("code", "")
-        category   = (room.get("categories") or ["—"])[0]
-        difficulty = room.get("difficulty", "—").capitalize()
-        emoji      = DIFFICULTY_EMOJI.get(difficulty.lower(), "⚪")
-        try:
-            dt = datetime.fromisoformat(room.get("completedDate", "").replace("Z", "+00:00"))
-            date_str = dt.strftime("%Y-%m-%d")
-        except Exception:
-            date_str = "—"
-        rows.append(f"| [{title}](https://tryhackme.com/room/{slug}) | {category} | {emoji} {difficulty} | {date_str} |")
+    for room in sorted(rooms, key=lambda r: r.get("completed", ""), reverse=True):
+        difficulty = room.get("difficulty", "easy").capitalize()
+        emoji = DIFFICULTY_EMOJI.get(difficulty.lower(), "🟢")
+        rows.append(
+            f"| [{room['title']}](https://tryhackme.com/room/{room['slug']}) "
+            f"| {room.get('category', '—')} | {emoji} {difficulty} | {room['completed']} |"
+        )
 
     rooms_table = "| Room | Category | Difficulty | Completed |\n|------|----------|------------|-----------|\n"
     rooms_table += "\n".join(rows) if rows else "| — | — | — | — |"
@@ -169,27 +103,21 @@ def update_readme(rooms: list, profile: dict):
 
     with open("README.md", "w") as f:
         f.write(content)
-
     print(f"[README] ✅ Updated with {total} rooms")
 
-
-# ── Main ──────────────────────────────────────────────────────────────────────
-
 def main():
-    print("🚀 Starting TryHackMe sync...\n")
-    profile = fetch_thm_profile()
-    rooms   = fetch_completed_rooms()
-    print(f"[THM] Found {len(rooms)} completed rooms")
+    print("🚀 Starting sync...\n")
+    rooms = load_rooms()
+    print(f"[rooms.json] Found {len(rooms)} rooms")
 
-    existing  = get_existing_notion_rooms()
-    new_rooms = [r for r in rooms if r.get("code") not in existing]
+    existing = get_existing_notion_rooms()
+    new_rooms = [r for r in rooms if r["slug"] not in existing]
     print(f"[Notion] {len(new_rooms)} new room(s) to add")
     for room in new_rooms:
         add_room_to_notion(room)
 
-    update_readme(rooms, profile)
+    update_readme(rooms)
     print("\n✅ Sync complete!")
-
 
 if __name__ == "__main__":
     main()
