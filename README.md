@@ -13,10 +13,10 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | — |
-| 🔥 Current Streak | — |
-| 🏆 Rank | — |
-| 🌐 Country Rank | — |
+| 🏁 Rooms Completed | 0 |
+| 🔥 Current Streak | — days |
+| 🏆 Rank | #— |
+| 🌐 Country Rank | #— |
 <!-- THM-STATS:END -->
 
 ---
