@@ -25,14 +25,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run sync script
+     - name: Run sync script
         env:
           THM_USERNAME: ${{ secrets.THM_USERNAME }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           THM_COOKIE: ${{ secrets.THM_COOKIE }}
+          THM_CF_CLEARANCE: ${{ secrets.THM_CF_CLEARANCE }}
         run: python scripts/sync_thm.py
-
+        
       - name: Commit README changes
         run: |
           git config --global user.name "github-actions[bot]"
