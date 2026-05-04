@@ -54,13 +54,14 @@ def fetch_thm_profile():
 def fetch_completed_rooms():
     try:
         r = requests.get(THM_ROOMS_URL, headers=THM_HEADERS, timeout=10)
+        print(f"[THM] Status code: {r.status_code}")
+        print(f"[THM] Response preview: {r.text[:300]}")
         r.raise_for_status()
         data = r.json()
         return data.get("data", {}).get("items", [])
     except Exception as e:
         print(f"[THM] Could not fetch rooms: {e}")
         return []
-
 
 # ── Notion ────────────────────────────────────────────────────────────────────
 
