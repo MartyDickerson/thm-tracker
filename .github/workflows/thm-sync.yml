@@ -31,6 +31,7 @@ jobs:
           THM_USERNAME: ${{ secrets.THM_USERNAME }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          THM_COOKIE: ${{ secrets.THM_COOKIE }}
         run: python scripts/sync_thm.py
 
       - name: Commit README changes
