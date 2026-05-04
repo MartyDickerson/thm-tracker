@@ -18,9 +18,12 @@ NOTION_TOKEN       = os.environ["NOTION_TOKEN"]
 NOTION_DATABASE_ID = os.environ["NOTION_DATABASE_ID"]
 THM_COOKIE         = os.environ["THM_COOKIE"]
 
+THM_CF_CLEARANCE = os.environ["THM_CF_CLEARANCE"]
+
 THM_HEADERS = {
-    "Cookie": f"connect.sid={THM_COOKIE}",
-    "User-Agent": "Mozilla/5.0",
+    "Cookie": f"connect.sid={THM_COOKIE}; cf_clearance={THM_CF_CLEARANCE}",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://tryhackme.com",
 }
 
 THM_PROFILE_URL = f"https://tryhackme.com/api/user/rank/{THM_USERNAME}"
