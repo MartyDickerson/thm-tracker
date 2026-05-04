@@ -1,13 +1,10 @@
 name: Sync TryHackMe Progress
-
 on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -16,16 +13,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
- - name: Run sync script
+      - name: Run sync script
         env:
           THM_USERNAME: ${{ secrets.THM_USERNAME }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
@@ -33,7 +27,6 @@ jobs:
           THM_COOKIE: ${{ secrets.THM_COOKIE }}
           THM_CF_CLEARANCE: ${{ secrets.THM_CF_CLEARANCE }}
         run: python scripts/sync_thm.py
-        
       - name: Commit README changes
         run: |
           git config --global user.name "github-actions[bot]"
