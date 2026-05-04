@@ -34,10 +34,11 @@ jobs:
           THM_COOKIE: ${{ secrets.THM_COOKIE }}
         run: python scripts/sync_thm.py
 
-      - name: Commit README changes
+     - name: Commit README changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add README.md
           git diff --cached --quiet || git commit -m "🤖 Auto-sync: TryHackMe progress updated"
           git push
