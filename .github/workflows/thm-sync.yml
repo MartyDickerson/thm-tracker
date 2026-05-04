@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-     - name: Run sync script
+ - name: Run sync script
         env:
           THM_USERNAME: ${{ secrets.THM_USERNAME }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
