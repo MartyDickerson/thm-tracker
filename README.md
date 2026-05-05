@@ -13,10 +13,7 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | 0 |
-| 🔥 Current Streak | — days |
-| 🏆 Rank | #— |
-| 🌐 Country Rank | #— |
+| 🏁 Rooms Completed | 1 |
 <!-- THM-STATS:END -->
 
 ---
@@ -26,7 +23,7 @@
 <!-- THM-ROOMS:START -->
 | Room | Category | Difficulty | Completed |
 |------|----------|------------|-----------|
-| — | — | — | — |
+| [Junior Security Analyst Intro](https://tryhackme.com/room/jrsecanalystintrouxo) | SOC | 🟢 Easy | 2025-05-04 |
 <!-- THM-ROOMS:END -->
 
 ---
