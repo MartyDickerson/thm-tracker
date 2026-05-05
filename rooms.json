@@ -5,5 +5,12 @@
     "category": "SOC",
     "difficulty": "easy",
     "completed": "2025-05-04"
+  },
+  {
+    "title": "Security Operations Center (SOC)",
+    "slug": "securityoperationscenter",
+    "category": "SOC",
+    "difficulty": "easy",
+    "completed": "2025-05-04"
   }
 ]
