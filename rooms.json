@@ -12,5 +12,12 @@
     "category": "SOC",
     "difficulty": "easy",
     "completed": "2025-05-04"
+  },
+  {
+    "title": "A Day in the Life of a Security Analyst",
+    "slug": "adayinthelifeofasecurityanalyst",
+    "category": "SOC",
+    "difficulty": "easy",
+    "completed": "2025-05-04"
   }
 ]
