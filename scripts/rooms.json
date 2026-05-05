@@ -1,9 +1,9 @@
 [
   {
-    "title": "Example Room",
-    "slug": "example-room",
-    "category": "Linux",
+    "title": "Junior Security Analyst Intro",
+    "slug": "jrsecanalystintrouxo",
+    "category": "SOC",
     "difficulty": "easy",
-    "completed": "2025-05-01"
+    "completed": "2025-05-04"
   }
 ]
