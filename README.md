@@ -13,7 +13,7 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | 2 |
+| 🏁 Rooms Completed | 3 |
 <!-- THM-STATS:END -->
 
 ---
@@ -25,6 +25,7 @@
 |------|----------|------------|-----------|
 | [Junior Security Analyst Intro](https://tryhackme.com/room/jrsecanalystintrouxo) | SOC | 🟢 Easy | 2025-05-04 |
 | [Security Operations Center (SOC)](https://tryhackme.com/room/securityoperationscenter) | SOC | 🟢 Easy | 2025-05-04 |
+| [A Day in the Life of a Security Analyst](https://tryhackme.com/room/adayinthelifeofasecurityanalyst) | SOC | 🟢 Easy | 2025-05-04 |
 <!-- THM-ROOMS:END -->
 
 ---
