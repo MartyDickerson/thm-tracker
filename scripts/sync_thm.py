@@ -55,7 +55,7 @@ def add_room_to_notion(room):
         "properties": {
             "Name":       {"title": [{"text": {"content": room["title"]}}]},
             "Slug":       {"rich_text": [{"text": {"content": room["slug"]}}]},
-            "Category":   {"select": {"name": room.get("category", "General")}},
+            "Catagory":   {"select": {"name": room.get("category", "General")}},
             "Difficulty": {"select": {"name": f"{emoji} {difficulty.capitalize()}"}},
             "Completed":  {"date": {"start": room["completed"]}},
             "URL":        {"url": f"https://tryhackme.com/room/{room['slug']}"},
