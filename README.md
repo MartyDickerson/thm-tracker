@@ -13,7 +13,7 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | 1 |
+| 🏁 Rooms Completed | 2 |
 <!-- THM-STATS:END -->
 
 ---
@@ -24,6 +24,7 @@
 | Room | Category | Difficulty | Completed |
 |------|----------|------------|-----------|
 | [Junior Security Analyst Intro](https://tryhackme.com/room/jrsecanalystintrouxo) | SOC | 🟢 Easy | 2025-05-04 |
+| [Security Operations Center (SOC)](https://tryhackme.com/room/securityoperationscenter) | SOC | 🟢 Easy | 2025-05-04 |
 <!-- THM-ROOMS:END -->
 
 ---
