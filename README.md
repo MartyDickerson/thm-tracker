@@ -13,7 +13,7 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | 3 |
+| 🏁 Rooms Completed | 4 |
 <!-- THM-STATS:END -->
 
 ---
@@ -23,6 +23,7 @@
 <!-- THM-ROOMS:START -->
 | Room | Category | Difficulty | Completed |
 |------|----------|------------|-----------|
+| [SOC Role in Blue Team](https://tryhackme.com/room/socroleblueTeam) | SOC | 🟢 Easy | 2026-05-12 |
 | [Junior Security Analyst Intro](https://tryhackme.com/room/jrsecanalystintrouxo) | SOC | 🟢 Easy | 2025-05-04 |
 | [Security Operations Center (SOC)](https://tryhackme.com/room/securityoperationscenter) | SOC | 🟢 Easy | 2025-05-04 |
 | [A Day in the Life of a Security Analyst](https://tryhackme.com/room/adayinthelifeofasecurityanalyst) | SOC | 🟢 Easy | 2025-05-04 |
