@@ -19,5 +19,12 @@
     "category": "SOC",
     "difficulty": "easy",
     "completed": "2025-05-04"
-  }
+  },
+  {
+  "title": "SOC Role in Blue Team",
+  "slug": "socroleblueTeam",
+  "category": "SOC",
+  "difficulty": "easy",
+  "completed": "2026-05-12"
+}
 ]
