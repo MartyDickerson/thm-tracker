@@ -26,5 +26,12 @@
   "category": "SOC",
   "difficulty": "easy",
   "completed": "2026-05-12"
-}
+},
+  {
+  "title": "SOC L1 Alert Triage",
+  "slug": "socl1alerttriage",
+  "category": "SOC",
+  "difficulty": "easy",
+  "completed": "2026-05-13"
+}  
 ]
