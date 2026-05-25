@@ -13,7 +13,7 @@
 <!-- THM-STATS:START -->
 | Metric | Value |
 |--------|-------|
-| 🏁 Rooms Completed | 5 |
+| 🏁 Rooms Completed | 6 |
 <!-- THM-STATS:END -->
 
 ---
@@ -23,6 +23,7 @@
 <!-- THM-ROOMS:START -->
 | Room | Category | Difficulty | Completed |
 |------|----------|------------|-----------|
+| [SOC L1 Alert Reporting](https://tryhackme.com/room/socl1alertreporting) | SOC | 🟢 Easy | 2026-05-25 |
 | [SOC L1 Alert Triage](https://tryhackme.com/room/socl1alerttriage) | SOC | 🟢 Easy | 2026-05-13 |
 | [SOC Role in Blue Team](https://tryhackme.com/room/socroleblueTeam) | SOC | 🟢 Easy | 2026-05-12 |
 | [Junior Security Analyst Intro](https://tryhackme.com/room/jrsecanalystintrouxo) | SOC | 🟢 Easy | 2025-05-04 |
