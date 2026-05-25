@@ -21,17 +21,24 @@
     "completed": "2025-05-04"
   },
   {
-  "title": "SOC Role in Blue Team",
-  "slug": "socroleblueTeam",
-  "category": "SOC",
-  "difficulty": "easy",
-  "completed": "2026-05-12"
-},
+    "title": "SOC Role in Blue Team",
+    "slug": "socroleblueTeam",
+    "category": "SOC",
+    "difficulty": "easy",
+    "completed": "2026-05-12"
+  },
   {
-  "title": "SOC L1 Alert Triage",
-  "slug": "socl1alerttriage",
-  "category": "SOC",
-  "difficulty": "easy",
-  "completed": "2026-05-13"
-}  
+    "title": "SOC L1 Alert Triage",
+    "slug": "socl1alerttriage",
+    "category": "SOC",
+    "difficulty": "easy",
+    "completed": "2026-05-13"
+  },
+  {
+    "title": "SOC L1 Alert Reporting",
+    "slug": "socl1alertreporting",
+    "category": "SOC",
+    "difficulty": "easy",
+    "completed": "2026-05-25"
+  }
 ]
